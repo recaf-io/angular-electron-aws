@@ -1,8 +1,8 @@
-
 # Introduction
 - This project is part of a [Recaf](https://recaf.io) tutorial series intended to get you started working with AWS SDK in a native application.
-- [Become a Recaf patron through Patreon!](https://www.patreon.com/recaf)
 - Link to tutorial series coming soon
+
+[![Become a Patron!](https://c5.patreon.com/external/logo/become_a_patron_button.png)](https://www.patreon.com/join/recaf?)
 
 # Getting Started
 This project is a specialized fork of [maximegris/angular-electron](https://github.com/maximegris/angular-electron), which is a great starting point for 
