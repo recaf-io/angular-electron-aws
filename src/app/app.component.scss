@@ -1,0 +1,55 @@
+@import '../material-variables.scss';
+
+.bg-color-primary {
+    background-color: mat-color($candy-app-primary);
+}
+
+.bg-color-accent {
+    background-color: mat-color($candy-app-accent);
+}
+
+.bg-color-primary a, .bg-color-primary mat-icon {
+    color: mat-color($candy-app-primary, lighter-contrast);
+}
+
+.bg-color-accent a, .bg-color-accent mat-icon {
+    color: mat-color($candy-app-accent, lighter-contrast);
+}
+
+.companyNameTitle{
+    color: $color-primary-2;
+}
+
+.routeNameTitle {
+    display:block; 
+    float:right;
+}
+
+.overflowYScroll{
+    overflow-y: scroll;
+}
+
+.highlightCurrentRoute,
+.highlightCurrentRoute a,
+.highlightCurrentRoute mat-icon{
+    color:white!important;
+}
+
+.nav-top-border {
+    border-top: 1px solid $color-primary-2;
+    border-right: 1px solid $color-primary-2;
+}
+
+img.favicon{
+  position:absolute;
+  left:0;
+  bottom:0; 
+  height:32px;
+  margin-left:10px; 
+  margin-bottom:10px;
+}
+
+.cursor{
+    cursor: pointer;
+}
+

@@ -37,7 +37,13 @@
     "e2e": "npm run postinstall:web && ng e2e",
     "version": "conventional-changelog -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@angular/animations": "^7.2.7",
+    "@angular/cdk": "^7.3.3",
+    "@angular/flex-layout": "^7.0.0-beta.23",
+    "@angular/material": "^7.3.3",
+    "aws-sdk": "^2.411.0"
+  },
   "devDependencies": {
     "@angular-devkit/build-angular": "0.12.1",
     "@angular/cli": "7.2.1",

@@ -19,6 +19,10 @@ import { WebviewDirective } from './directives/webview.directive';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 
+import * as material from '@angular/material';
+import * as dialog from '@angular/material/dialog';
+import {FlexLayoutModule} from '@angular/flex-layout';
+
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -41,7 +45,14 @@ export function HttpLoaderFactory(http: HttpClient) {
         useFactory: (HttpLoaderFactory),
         deps: [HttpClient]
       }
-    })
+    }),
+    //material
+    material.MatButtonModule, material.MatCheckboxModule, material.MatListModule, material.MatCardModule, material.MatFormFieldModule,material.MatInputModule,material.MatExpansionModule, 
+    material.MatIconModule, material.MatToolbarModule, material.MatMenuModule, material.MatSidenavModule, material.MatSelectModule, material.MatGridListModule, material.MatTooltipModule,
+    material.MatProgressSpinnerModule, material.MatTabsModule, material.MatCheckboxModule,material.MatAutocompleteModule, material.MatChipsModule, material.MatSnackBarModule,
+    dialog.MatDialogModule,
+    //flex
+    FlexLayoutModule,
   ],
   providers: [ElectronService],
   bootstrap: [AppComponent]

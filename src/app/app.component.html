@@ -1,1 +1,38 @@
-<router-outlet></router-outlet>
+<div fxFlexFill fxLayout="column">
+    <div>
+        <mat-toolbar color="primary">
+            <mat-toolbar-row>
+
+                <button fxFlex="50px" mat-icon-button (click)="invertNavMenuHideValue()">
+                    <mat-icon svgIcon="menu"></mat-icon>
+                </button>
+                <h1 fxFlex="50%">
+                    <p class="companyNameTitle">
+                        <small>Recaf AWS</small>
+                    </p>
+                </h1>
+                <div fxFlex>
+                    <p class="routeNameTitle">
+                        {{pageTitle}}
+                    </p>
+                </div>
+            </mat-toolbar-row>
+        </mat-toolbar>
+    </div>
+
+    <div fxFlex>
+        <div fxFlex="200px" [fxHide]="hideNavMenu" class="bg-color-accent nav-top-border">
+            <mat-nav-list>
+                <mat-list-item routerLink="/" [ngClass]="{highlightCurrentRoute: pageTitle=='Dashboard'}">
+                    <mat-icon svgIcon="dashboard"></mat-icon>
+                    <a matLine routerLink="/">
+                        Dashboard
+                    </a>
+                </mat-list-item>
+            </mat-nav-list>
+        </div>
+        <div fxFlex class="overflowYScroll">
+            <router-outlet *ngIf="isDoneLoading"></router-outlet>
+        </div>
+    </div>
+</div>
