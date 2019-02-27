@@ -1,10 +1,14 @@
+<a href="https://recaf.io"><img align="right" alt="Go to Recaf.io" src="https://recaf.io/wp-content/uploads/2019/02/favicon2-1-e1551289983584.png"></a>
+
 # Introduction
+
 - This project is part of a [Recaf](https://recaf.io) tutorial series intended to get you started working with AWS SDK in a native application.
 - Link to tutorial series coming soon
 
-[![Become a Patron!](https://c5.patreon.com/external/logo/become_a_patron_button.png)](https://www.patreon.com/join/recaf?)
+<a href="https://www.patreon.com/join/recaf?"><img alt="Become a Patron!" src="https://c5.patreon.com/external/logo/become_a_patron_button.png"></a>
 
 # Getting Started
+
 This project is a specialized fork of [maximegris/angular-electron](https://github.com/maximegris/angular-electron), which is a great starting point for 
 a new Electron application using Angular.
 
@@ -26,5 +30,6 @@ npm start
 - [AWS SDK](https://aws.amazon.com/sdk-for-node-js/)
 - [Material Icons](https://material.io/tools/icons/?style=baseline)
 - And don't forget [Node/NPM](https://nodejs.org)!
+
 
 
