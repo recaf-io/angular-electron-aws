@@ -88,6 +88,8 @@ export class AppComponent {
     switch (navigationUrl) {
       case '/':
         return 'Dashboard';
+      case '/credentials':
+        return 'Credentials';
     }
     return 'Dashboard'
   }

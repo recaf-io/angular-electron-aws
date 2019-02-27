@@ -29,6 +29,12 @@
                         Dashboard
                     </a>
                 </mat-list-item>
+                <mat-list-item routerLink="credentials" [ngClass]="{highlightCurrentRoute: pageTitle=='Credentials'}">
+                    <mat-icon svgIcon="dashboard"></mat-icon>
+                    <a matLine routerLink="/credentials">
+                        Credentials
+                    </a>
+                </mat-list-item>
             </mat-nav-list>
         </div>
         <div fxFlex class="overflowYScroll">
