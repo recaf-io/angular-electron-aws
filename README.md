@@ -2,8 +2,7 @@
 
 # Introduction
 
-- This project is part of a [Recaf](https://recaf.io) tutorial series intended to get you started working with AWS SDK in a native application.
-- Link to tutorial series coming soon
+This project is part of a [Recaf](https://recaf.io) tutorial series intended to get you started working with AWS SDK in a native application. A link to tutorial series coming soon.
 
 <a href="https://www.patreon.com/join/recaf?"><img alt="Become a Patron!" src="https://c5.patreon.com/external/logo/become_a_patron_button.png"></a>
 
