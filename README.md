@@ -19,11 +19,12 @@ npm start
 ```
 
 # Stack Used
-- Electron
-- Angular
-- Angular Material
-- Angular Flex Layout
-- AWS SDK
-- Material Icons
+- [Electron](https://electronjs.org/)
+- [Angular](https://angular.io/)
+- [Angular Material](https://material.angular.io/)
+- [Angular Flex Layout](https://github.com/angular/flex-layout)
+- [AWS SDK](https://aws.amazon.com/sdk-for-node-js/)
+- [Material Icons](https://material.io/tools/icons/?style=baseline)
+- And don't forget [Node/NPM](https://nodejs.org)!
 
 
