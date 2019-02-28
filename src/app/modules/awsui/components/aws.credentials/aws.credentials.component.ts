@@ -2,11 +2,11 @@ import { Component, OnInit, Inject, Output, EventEmitter } from '@angular/core';
 
 import {IAM} from 'aws-sdk';
 
-import {AwsCredentialsModel} from '../../models/credentials/aws-credentials-model';
-import {AwsRegionModel} from '../../models/region/aws-region-model';
+import {AwsCredentialsModel} from '../../../aws/models/credentials/aws-credentials-model';
+import {AwsRegionModel} from '../../../aws//models/region/aws-region-model';
 
-import {AwsCredentialsService} from '../../service/credentials/aws-credentials.service';
-import {AwsRegionService} from '../../service/region/aws-region.service';
+import {AwsCredentialsService} from '../../../aws//service/credentials/aws-credentials.service';
+import {AwsRegionService} from '../../../aws//service/region/aws-region.service';
 
 @Component({
   selector: 'app-aws.credentials',

@@ -24,6 +24,7 @@ import * as dialog from '@angular/material/dialog';
 import {FlexLayoutModule} from '@angular/flex-layout';
 
 import * as aws from './modules/aws/aws.module'
+import * as awsui from './modules/awsui/awsui.module'
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -55,8 +56,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     dialog.MatDialogModule,
     //flex
     FlexLayoutModule,
-    //home grown aws module
-    aws.AwsModule
+    //home grown aws modules
+    aws.AwsModule,
+    awsui.AwsuiModule
   ],
   providers: [ElectronService],
   bootstrap: [AppComponent]

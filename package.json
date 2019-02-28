@@ -42,7 +42,8 @@
     "@angular/cdk": "^7.3.3",
     "@angular/flex-layout": "^7.0.0-beta.23",
     "@angular/material": "^7.3.3",
-    "aws-sdk": "^2.411.0"
+    "aws-sdk": "^2.411.0",
+    "electron-json-storage": "^4.1.6"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "0.12.1",

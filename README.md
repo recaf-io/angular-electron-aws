@@ -31,4 +31,6 @@ npm start
 - And don't forget [Node/NPM](https://nodejs.org)!
 
 
+## Other Tools Used
+- electron-json-storage - for storing data on the local machine
 

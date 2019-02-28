@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 
 //import { AwsModule } from './modules/aws/aws.module';
-import { AwsCredentialsComponent } from './modules/aws/components/aws.credentials/aws.credentials.component';
+import { AwsCredentialsComponent } from './modules/awsui/components/aws.credentials/aws.credentials.component';
 
 const routes: Routes = [
     {
