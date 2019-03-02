@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, Output, EventEmitter } from '@angular/core';
-import { MatDialogModule, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
 
 import {IAM} from 'aws-sdk';
 
@@ -8,6 +8,10 @@ import {AwsRegionModel} from '../../../aws//models/region/aws-region-model';
 
 import {AwsCredentialsService} from '../../../aws//service/credentials/aws-credentials.service';
 import {AwsRegionService} from '../../../aws//service/region/aws-region.service';
+
+import {DialogManagerService} from '../../../sharedui/service/dialog/dialog-manager.service';
+
+import {ReloadDialogComponent} from '../../../sharedui/components/reload-dialog/reload-dialog.component';
 
 @Component({
   selector: 'app-aws.credentials',
@@ -22,17 +26,19 @@ export class AwsCredentialsComponent implements OnInit {
   regions: AwsRegionModel[] = []; //TODO make region selector a component for reuse in header also for single codebase
   selectedRegion: AwsRegionModel;
   loadingRegions: boolean = false;
+  saveLocation: string = null;
 
   constructor( 
     @Inject('aws_config') private config: IAM.ClientConfiguration,
     private regionService: AwsRegionService, 
-    private credentialService: AwsCredentialsService
-    , private md: MatDialog
+    private credentialService: AwsCredentialsService,
+    private dialogManager: DialogManagerService
   ) { 
-
+    this.saveLocation = this.credentialService.getSaveLocation();
   }
 
   async ngOnInit() {
+    console.log('get credentials');
     let credentials = await this.credentialService.getCredentials();
     let defaultRegion: string = null;
     
@@ -71,7 +77,7 @@ public save() {
       (err) => { console.log(err); },
       () => {
           this.onchange.emit(null);
-          this.md.open(ReloadDialogComponent);
+          this.dialogManager.showDialog(ReloadDialogComponent);
           this.saveIntoConfigs();
       }
   );

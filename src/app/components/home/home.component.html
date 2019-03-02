@@ -13,12 +13,7 @@
       </mat-list>
     </div>
     <div *ngIf="!isLoading">
-      <mat-list>
-        <mat-list-item>
-          <mat-icon matListAvatar svgIcon="thumbs-up"></mat-icon>
-          <h3 matLine> Done Loading! </h3>
-        </mat-list-item>
-      </mat-list>
+      <app-self-info></app-self-info>
     </div>
   </mat-card-content>
 </mat-card>

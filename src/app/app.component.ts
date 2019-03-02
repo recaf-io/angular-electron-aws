@@ -9,6 +9,8 @@ import { Router, NavigationEnd } from '@angular/router';
 import { DomSanitizer, Title } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material';
 
+import { AwsCredentialsService }from './modules/aws/service/credentials/aws-credentials.service';
+
 interface iconData {
   fileName: string,
   iconName: string
@@ -25,7 +27,9 @@ export class AppComponent {
     private sanitizer: DomSanitizer,
     private titleService: Title,
     private router: Router,
-    private translate: TranslateService) {
+    private translate: TranslateService,
+    @Inject('aws_config') private config: AWS.IAM.ClientConfiguration,
+    private credentialService: AwsCredentialsService) {
 
     this.isDoneLoading = false;
     this.registerAllIcons();
@@ -98,6 +102,14 @@ export class AppComponent {
     
     //console.log('is done loading app component');
     this.isDoneLoading = true;
+
+    let credentials = await this.credentialService.getCredentials();
+    let region = await this.credentialService.getCurrentRegion();
+
+    this.config.accessKeyId = credentials.accessKey;
+    this.config.secretAccessKey = credentials.secretKey;
+    this.config.region = region;
+    debugger;
 
     if (!isDevMode() && electron.remote.app) {
      

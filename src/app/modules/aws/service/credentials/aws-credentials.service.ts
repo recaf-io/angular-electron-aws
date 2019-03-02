@@ -13,10 +13,10 @@ export class AwsCredentialsService {
   /*path: string;*/
   currentRegion: string;
   constructor() {
-      /*this.path = process.cwd() + cred_file_location;
-      //console.log('resources path');
+      /*this.path = process.cwd() + cred_file_location;*/
+      console.log('resources path');
       //console.log(storage);
-      //console.log(storage.getDataPath());*/
+      console.log(storage.getDataPath());
   }
 
   setCurrentRegion(currentRegion: string): void {
@@ -124,4 +124,7 @@ export class AwsCredentialsService {
 
   }
 
+  public getSaveLocation():string{
+      return <string>storage.getDataPath() + '\\' + cred_key + '.json';
+  }
 }
