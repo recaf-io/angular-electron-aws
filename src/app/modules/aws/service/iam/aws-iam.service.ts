@@ -47,15 +47,30 @@ export class AwsIamService {
   private iam: AWS.IAM;
 
   constructor(
-      private credService: AwsCredentialsService,
-      @Inject('aws_config') private config: AWS.IAM.ClientConfiguration) {
+      private credentialsService: AwsCredentialsService) {
           //console.log('constructing iam service', config.accessKeyId, config.secretAccessKey);
-      this.iam = new AWS.IAM(config);
+      //this.iam = new AWS.IAM(config);
       //console.log('IAM SERVICE', config);
   }
 
+  private async runSetup() {
+    if (this.iam) {
+        return this.iam;
+    } else {
+        let credentials = await this.credentialsService.getCredentials();
+        let config: AWS.IAM.ClientConfiguration = {
+            accessKeyId: credentials.accessKey,
+            secretAccessKey: credentials.secretKey,
+            region: credentials.defaultRegion
+        }
+        this.iam = new AWS.IAM(config);
+    }
+
+}
+
   /** gets all users */
-  public ListUsers(): Promise<AWS.IAM.ListUsersResponse> {
+  public async ListUsers(): Promise<AWS.IAM.ListUsersResponse> {
+      await this.runSetup();
       return new Promise((resolve, reject) => {
           this.iam.listUsers((err, data) => {
               if (err) {
@@ -70,7 +85,8 @@ export class AwsIamService {
   }
 
   /** gets all groups */
-  public ListGroups(): Promise<AWS.IAM.ListGroupsResponse> {
+  public async ListGroups(): Promise<AWS.IAM.ListGroupsResponse> {
+    await this.runSetup();
       return new Promise((resolve, reject) => {
           this.iam.listGroups((err, data) => {
               resolve(data);
@@ -79,7 +95,8 @@ export class AwsIamService {
   }
 
   /** gets all groups for a given user */
-  public ListGroupsForUser(username: string): Promise<AWS.IAM.ListGroupsForUserResponse> {
+  public async ListGroupsForUser(username: string): Promise<AWS.IAM.ListGroupsForUserResponse> {
+    await this.runSetup();
       let model: AWS.IAM.ListGroupsForUserRequest = {
           UserName: username
       };
@@ -90,7 +107,8 @@ export class AwsIamService {
       });
   }
 
-  public CreateGroup(groupName: string): Promise<AWS.IAM.CreateGroupResponse> {
+  public async CreateGroup(groupName: string): Promise<AWS.IAM.CreateGroupResponse> {
+    await this.runSetup();
       let model: AWS.IAM.CreateGroupRequest = {
           GroupName: groupName
       };
@@ -101,7 +119,8 @@ export class AwsIamService {
       });
   }
 
-  public GetGroup(groupName: string): Promise<AWS.IAM.GetGroupResponse> {
+  public async GetGroup(groupName: string): Promise<AWS.IAM.GetGroupResponse> {
+    await this.runSetup();
       let model: AWS.IAM.GetGroupRequest = {
           GroupName: groupName
       };
@@ -113,7 +132,8 @@ export class AwsIamService {
   }
 
   /** gets all roles */
-  public ListRoles(): Promise<AWS.IAM.ListRolesResponse> {
+  public async ListRoles(): Promise<AWS.IAM.ListRolesResponse> {
+    await this.runSetup();
       return new Promise((resolve, reject) => {
           this.iam.listRoles((err, data) => {
               resolve(data);
@@ -121,7 +141,8 @@ export class AwsIamService {
       });
   }
 
-  public GetRole(roleName: string): Promise<AWS.IAM.GetRoleResponse> {
+  public async GetRole(roleName: string): Promise<AWS.IAM.GetRoleResponse> {
+    await this.runSetup();
       let model: AWS.IAM.GetRoleRequest = {
           RoleName: roleName
       };
@@ -133,7 +154,8 @@ export class AwsIamService {
   }
 
   /** gets an individual policy */
-  public getPolicy(policyArn: string): Promise<AWS.IAM.GetPolicyResponse> {
+  public async getPolicy(policyArn: string): Promise<AWS.IAM.GetPolicyResponse> {
+    await this.runSetup();
       let model: AWS.IAM.GetPolicyRequest = {
           PolicyArn: policyArn
       };
@@ -145,7 +167,8 @@ export class AwsIamService {
   }
 
   /** gets the entity that contains the json document for the given policy */
-  public getPolicyVersion(policyArn: string, policyVersion: string): Promise<AWS.IAM.GetPolicyVersionResponse> {
+  public async getPolicyVersion(policyArn: string, policyVersion: string): Promise<AWS.IAM.GetPolicyVersionResponse> {
+    await this.runSetup();
       let model: AWS.IAM.GetPolicyVersionRequest = {
           PolicyArn: policyArn,
           VersionId: policyVersion
@@ -160,7 +183,8 @@ export class AwsIamService {
   /*
       get inline policies for User
   */
-  public getUserPolicies(username: string): Promise<AWS.IAM.ListUserPoliciesResponse> {
+  public async getUserPolicies(username: string): Promise<AWS.IAM.ListUserPoliciesResponse> {
+    await this.runSetup();
       let model: AWS.IAM.ListUserPoliciesRequest = {
           UserName: username
       };
@@ -174,7 +198,8 @@ export class AwsIamService {
   /*
       get inline policies for Group
   */
-  public getGroupPolicies(groupName: string): Promise<AWS.IAM.ListGroupPoliciesResponse> {
+  public async getGroupPolicies(groupName: string): Promise<AWS.IAM.ListGroupPoliciesResponse> {
+    await this.runSetup();
       let model: AWS.IAM.ListGroupPoliciesRequest = {
           GroupName: groupName
       };
@@ -185,7 +210,8 @@ export class AwsIamService {
       });
   }
 
-  public getGroupPolicy(groupName: string, policyName: string): Promise<AWS.IAM.GetGroupPolicyResponse> {
+  public async getGroupPolicy(groupName: string, policyName: string): Promise<AWS.IAM.GetGroupPolicyResponse> {
+    await this.runSetup();
       let model: AWS.IAM.GetGroupPolicyRequest = {
           GroupName: groupName,
           PolicyName: policyName
@@ -202,7 +228,8 @@ export class AwsIamService {
       });
   }
 
-  public addGroupInlinePolicy(groupName: string, policyName: string, policyDocument: GroupInlinePolicyDocument): Promise<boolean> {
+  public async addGroupInlinePolicy(groupName: string, policyName: string, policyDocument: GroupInlinePolicyDocument): Promise<boolean> {
+    await this.runSetup();
       let model: AWS.IAM.PutGroupPolicyRequest = {
           GroupName: groupName,
           PolicyName: policyName,
@@ -223,7 +250,8 @@ export class AwsIamService {
   /*
       get inline policies for Role
   */
-  public getRolePolicies(roleName: string): Promise<AWS.IAM.ListRolePoliciesResponse> {
+  public async getRolePolicies(roleName: string): Promise<AWS.IAM.ListRolePoliciesResponse> {
+    await this.runSetup();
       let model: AWS.IAM.ListRolePoliciesRequest = {
           RoleName: roleName
       };
@@ -236,7 +264,8 @@ export class AwsIamService {
 
 
   /** Gets all of the policies (permission sets) associated with the user */
-  public listAttachedUserPolicies(username: string): Promise<AWS.IAM.ListAttachedUserPoliciesResponse> {
+  public async listAttachedUserPolicies(username: string): Promise<AWS.IAM.ListAttachedUserPoliciesResponse> {
+    await this.runSetup();
       let model: AWS.IAM.ListAttachedUserPoliciesRequest = {
           UserName: username
       };
@@ -248,7 +277,8 @@ export class AwsIamService {
   }
 
   /** Gets all of the policies (permission sets) associated with the Group */
-  public listAttachedGroupPolicies(groupName: string): Promise<AWS.IAM.ListAttachedGroupPoliciesResponse> {
+  public async listAttachedGroupPolicies(groupName: string): Promise<AWS.IAM.ListAttachedGroupPoliciesResponse> {
+    await this.runSetup();
       let model: AWS.IAM.ListAttachedGroupPoliciesRequest = {
           GroupName: groupName
       };
@@ -260,7 +290,8 @@ export class AwsIamService {
   }
 
   /** Gets all of the policies (permission sets) associated with the Role */
-  public listAttachedRolePolicies(roleName: string): Promise<AWS.IAM.ListAttachedRolePoliciesResponse> {
+  public async listAttachedRolePolicies(roleName: string): Promise<AWS.IAM.ListAttachedRolePoliciesResponse> {
+    await this.runSetup();
       let model: AWS.IAM.ListAttachedRolePoliciesRequest = {
           RoleName: roleName
       };
@@ -272,7 +303,8 @@ export class AwsIamService {
   }
 
   /** Gets all inline policies for a given role */
-  public listRolePolicies(roleName: string): Promise<AWS.IAM.ListRolePoliciesResponse> {
+  public async listRolePolicies(roleName: string): Promise<AWS.IAM.ListRolePoliciesResponse> {
+    await this.runSetup();
       let model: AWS.IAM.ListRolePoliciesRequest = {
           RoleName: roleName
       };
@@ -283,7 +315,8 @@ export class AwsIamService {
       });
   }
 
-  public getRolePolicy(roleName: string, policyName: string): Promise<AWS.IAM.GetRolePolicyResponse> {
+  public async getRolePolicy(roleName: string, policyName: string): Promise<AWS.IAM.GetRolePolicyResponse> {
+    await this.runSetup();
       let model: AWS.IAM.GetRolePolicyRequest = {
           RoleName: roleName,
           PolicyName: policyName
@@ -296,7 +329,8 @@ export class AwsIamService {
   }
 
   /** Scope can be: null, "All" "AWS" "Local" */
-  public listPolicies(scope: string, maxItems: number = 5000): Promise<AWS.IAM.ListPoliciesResponse> {
+  public async listPolicies(scope: string, maxItems: number = 5000): Promise<AWS.IAM.ListPoliciesResponse> {
+    await this.runSetup();
       let model: AWS.IAM.ListPoliciesRequest = {
           Scope: scope
       }
@@ -307,7 +341,8 @@ export class AwsIamService {
       });
   }
 
-  public listEntitiesForPolicy(policyArn: string): Promise<AWS.IAM.ListEntitiesForPolicyResponse> {
+  public async listEntitiesForPolicy(policyArn: string): Promise<AWS.IAM.ListEntitiesForPolicyResponse> {
+    await this.runSetup();
       let model: AWS.IAM.ListEntitiesForPolicyRequest = {
           PolicyArn: policyArn
       };
@@ -320,6 +355,7 @@ export class AwsIamService {
 
 
   public async loadFullPolicyInfo(policyArn: string): Promise<PolicyFullyLoaded> {
+    await this.runSetup();
       return new Promise(async (resolve, reject) => {
           let policyResponse = await this.getPolicy(policyArn);
           let policyVersionResponse = await this.getPolicyVersion(policyArn, policyResponse.Policy.DefaultVersionId);
@@ -340,6 +376,7 @@ export class AwsIamService {
   }
 
   public async updatePolicy(policyArn: string, policyDocument: any): Promise<AWS.IAM.CreatePolicyVersionResponse> {
+    await this.runSetup();
       let model: AWS.IAM.CreatePolicyVersionRequest = {
           PolicyArn: policyArn,
           PolicyDocument: JSON.stringify(policyDocument),
@@ -353,6 +390,7 @@ export class AwsIamService {
   }
 
   public async createPolicy(policyName: string, policyDocument: any, description: string = null, path: string = '/'): Promise<AWS.IAM.CreatePolicyResponse> {
+    await this.runSetup();
       let model: AWS.IAM.CreatePolicyRequest = {
           PolicyDocument: JSON.stringify(policyDocument),
           PolicyName: policyName,
@@ -372,6 +410,7 @@ export class AwsIamService {
   }
 
   public async createRole(description: string, roleName: string, assumeRolePolicyDocument: any): Promise<AWS.IAM.CreateRoleResponse> {
+    await this.runSetup();
       let model: AWS.IAM.CreateRoleRequest = {
           RoleName: roleName,
           Description: description,
@@ -389,6 +428,7 @@ export class AwsIamService {
   }
 
   public async attachRolePolicy(roleName: string, policyArn: string): Promise<any> {
+    await this.runSetup();
       let model: AWS.IAM.AttachRolePolicyRequest = {
           PolicyArn: policyArn,
           RoleName: roleName
@@ -400,12 +440,11 @@ export class AwsIamService {
       });
   }
 
-  public getStatementsFromAssumeRolePolicy(role: AWS.IAM.Role): AssumeRolePolicyStatement[] {
+  public async getStatementsFromAssumeRolePolicy(role: AWS.IAM.Role): Promise<AssumeRolePolicyStatement[]> {
+    await this.runSetup();
       let policyDoc: any = this.parsePolicyDocument(role.AssumeRolePolicyDocument);
       let returnValue: AssumeRolePolicyStatement[] = [];
-      //console.log(policyDoc);
       if (policyDoc && policyDoc.Statement instanceof Array) {
-          //console.log('its an array');
           //traverse the array, find accounts, find non accounts, and add them to their respective collections
           policyDoc.Statement.forEach(pd => {
               var convertedValue = this.convertToAssumeRolePolicyStatement(pd);
@@ -416,7 +455,6 @@ export class AwsIamService {
       }
       else if (policyDoc && policyDoc.Statement) {
           //if it's not an array then it's an object
-          //console.log('its a solid');
           var convertedValue = this.convertToAssumeRolePolicyStatement(policyDoc.statement);
           if (convertedValue) {
               returnValue.push(convertedValue);
@@ -430,7 +468,7 @@ export class AwsIamService {
       return <AssumeRolePolicyStatement>value;
   }
 
-  public statementIsAllowAccountToAssumeRole(arps: AssumeRolePolicyStatement): boolean {
+  public async statementIsAllowAccountToAssumeRole(arps: AssumeRolePolicyStatement): Promise<boolean> {
       var accountNumber = this.getAccountNumberFromArpsArn(arps);
       if (accountNumber) {
           return true;
@@ -438,8 +476,9 @@ export class AwsIamService {
       return false;
   }
 
-  public getAccountNumberFromArpsArn(arps: AssumeRolePolicyStatement): string {
+  public async getAccountNumberFromArpsArn(arps: AssumeRolePolicyStatement): Promise<string> {
       if (arps && arps.Action == "sts:AssumeRole" && arps.Effect == "Allow" && arps.Principal && arps.Principal.AWS) {
+        await this.runSetup();
           if (arps.Principal.AWS.startsWith("arn:aws:iam::")
               && arps.Principal.AWS.endsWith(":root")) {
               var ss = arps.Principal.AWS.substring(13);
@@ -452,8 +491,8 @@ export class AwsIamService {
       return null;
   }
 
-  public updateRoleTrustPolicy(role: AWS.IAM.Role, trustPolicies: AssumeRolePolicyStatement[]): Promise<boolean> {
-      //console.log('running update');
+  public async updateRoleTrustPolicy(role: AWS.IAM.Role, trustPolicies: AssumeRolePolicyStatement[]): Promise<boolean> {
+    await this.runSetup();
 
       let statement: any = JSON.parse(unescape(role.AssumeRolePolicyDocument));
       statement.Statement = trustPolicies;
@@ -462,8 +501,6 @@ export class AwsIamService {
           RoleName: role.RoleName,
           PolicyDocument: JSON.stringify(statement)
       };
-
-      console.log(model);
       
       return new Promise((resolve, reject) => {
           this.iam.updateAssumeRolePolicy(model, (err, data) => {

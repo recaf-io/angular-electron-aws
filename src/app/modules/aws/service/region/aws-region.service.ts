@@ -2,6 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { AwsModule} from '../../aws.module';
 
 import {AwsRegionModel} from '../../models/region/aws-region-model';
+import { AwsCredentialsService } from '../credentials/aws-credentials.service';
 
 import * as AWS from 'aws-sdk';
 import { debug } from 'util';
@@ -12,10 +13,26 @@ import { debug } from 'util';
 })
 export class AwsRegionService {
   private ec2:AWS.EC2;
-  constructor(@Inject('aws_config') private config:AWS.EC2.ClientConfiguration) { 
-      this.ec2 = new AWS.EC2(config);
+  constructor(private credentialsService: AwsCredentialsService){
+    //@Inject('aws_config') private config:AWS.EC2.ClientConfiguration) { 
+      //this.ec2 = new AWS.EC2(config);
       this.populateLocalRegions();
   }
+
+  private async runSetup() {
+    if (this.ec2) {
+        return this.ec2;
+    } else {
+        let credentials = await this.credentialsService.getCredentials();
+        let config: AWS.EC2.ClientConfiguration = {
+            accessKeyId: credentials.accessKey,
+            secretAccessKey: credentials.secretKey,
+            region: credentials.defaultRegion
+        }
+        this.ec2 = new AWS.EC2(config);
+    }
+
+}
   
   private regions:AwsRegionModel[];
 
@@ -47,7 +64,8 @@ export class AwsRegionService {
 
   }
 
-  public GetRegions(cb:(regions:AwsRegionModel[])=>void):void{
+  public async GetRegions(cb:(regions:AwsRegionModel[])=>void):Promise<void>{
+    await this.runSetup();
     let regions = this.ec2.describeRegions((err,data)=>{
       let retList = new Array<AwsRegionModel>();
       data.Regions.map(d=>{ retList.push(new AwsRegionModel(d.RegionName, this.regions.filter(f=>{return f.value == d.RegionName})[0].name, d.Endpoint )); });
@@ -55,7 +73,8 @@ export class AwsRegionService {
     });
   }
 
-  public GetRegionsWithConfig(config:AWS.EC2.ClientConfiguration,cb:(regions:AwsRegionModel[])=>void ):void{
+  public async GetRegionsWithConfig(config:AWS.EC2.ClientConfiguration,cb:(regions:AwsRegionModel[])=>void ):Promise<void>{
+    await this.runSetup();
     let tempec2 = new AWS.EC2(config);
     //console.log("config",config);
     let regions = tempec2.describeRegions((err,data)=>{

@@ -26,6 +26,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import * as aws from './modules/aws/aws.module'
 import * as awsui from './modules/awsui/awsui.module'
 import * as sharedui from './modules/sharedui/sharedui.module';
+import * as shared from './modules/shared/shared.module';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -58,6 +59,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     //flex
     FlexLayoutModule,
     sharedui.SharedUiModule,
+    shared.SharedModule,
     //home grown aws modules
     aws.AwsModule,
     awsui.AwsuiModule

@@ -28,14 +28,11 @@ export class AppComponent {
     private titleService: Title,
     private router: Router,
     private translate: TranslateService,
-    @Inject('aws_config') private config: AWS.IAM.ClientConfiguration,
     private credentialService: AwsCredentialsService) {
 
     this.isDoneLoading = false;
     this.registerAllIcons();
     translate.setDefaultLang('en');
-    
-    console.log('AppConfig', AppConfig);
 
     this.titleService.setTitle('Recaf AWS | Dashboard');
     router.events.subscribe((event) => {
@@ -105,11 +102,6 @@ export class AppComponent {
 
     let credentials = await this.credentialService.getCredentials();
     let region = await this.credentialService.getCurrentRegion();
-
-    this.config.accessKeyId = credentials.accessKey;
-    this.config.secretAccessKey = credentials.secretKey;
-    this.config.region = region;
-    debugger;
 
     if (!isDevMode() && electron.remote.app) {
      
