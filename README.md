@@ -21,6 +21,12 @@ npm install -g @angular/cli
 npm start
 ```
 
+# Blogging About It
+
+A two part series explaining this project in more detail can be found here:
+- [AWS SDK Boilerplate with Electron and Angular – Part 1](https://recaf.io/blog/aws-sdk-electron-angular-boilerplate/)
+- AWS SDK Boilerplate with Electron and Angular – Part 2 -- Coming soon
+
 # Stack Used
 - [Electron](https://electronjs.org/)
 - [Angular](https://angular.io/)
