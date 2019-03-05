@@ -29,7 +29,6 @@ export class AwsCredentialsComponent implements OnInit {
   saveLocation: string = null;
 
   constructor( 
-    @Inject('aws_config') private config: IAM.ClientConfiguration,
     private regionService: AwsRegionService, 
     private credentialService: AwsCredentialsService,
     private dialogManager: DialogManagerService
@@ -64,8 +63,6 @@ export class AwsCredentialsComponent implements OnInit {
             this.loadingRegions = false;
         });
 
-    this.saveIntoConfigs();
-
 
 }
 
@@ -78,16 +75,8 @@ public save() {
       () => {
           this.onchange.emit(null);
           this.dialogManager.showDialog(ReloadDialogComponent);
-          this.saveIntoConfigs();
       }
   );
-}
-
-private saveIntoConfigs() {
-
-  this.config.accessKeyId = this.accesskey;
-  this.config.secretAccessKey = this.secretkey;
-  this.config.region = this.selectedRegion ? this.selectedRegion.value : null;
 }
 
 }
