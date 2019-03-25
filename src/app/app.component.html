@@ -29,6 +29,12 @@
                         Dashboard
                     </a>
                 </mat-list-item>
+                <mat-list-item routerLink="sqs-message-sender" [ngClass]="{highlightCurrentRoute: pageTitle=='Dashboard'}">
+                    <mat-icon svgIcon="dashboard"></mat-icon>
+                    <a matLine routerLink="sqs-message-sender">
+                        SQS Message Sender
+                    </a>
+                </mat-list-item>
                 <mat-list-item routerLink="credentials" [ngClass]="{highlightCurrentRoute: pageTitle=='Credentials'}">
                     <mat-icon svgIcon="dashboard"></mat-icon>
                     <a matLine routerLink="/credentials">

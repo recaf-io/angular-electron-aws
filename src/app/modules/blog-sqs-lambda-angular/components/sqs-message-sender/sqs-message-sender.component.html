@@ -1,0 +1,49 @@
+<mat-card class="example-card">
+  <mat-card-header>
+    <mat-card-title>SQS Message Sender</mat-card-title>
+    <mat-card-subtitle>Sample SQS Message Details</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <p>
+      This simple UI will help you send a message to the SQS queue you setup for the blog post here: 
+    </p>
+    <p>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>SQS Queue URL</mat-label>
+        <input matInput placeholder="SQS URL" [(ngModel)]="sqsUrl">
+        <mat-icon matSuffix svgIcon="data-setting"></mat-icon>
+        <mat-hint>This URL is created when you create your SQS queue</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Lambda Input</mat-label>
+        <input matInput placeholder="Lambda Input" [(ngModel)]="lambdaInput">
+        <mat-icon matSuffix svgIcon="data-setting"></mat-icon>
+        <mat-hint>This is just a number you want to use to verify the Lambda function was successfully triggered</mat-hint>
+      </mat-form-field>
+    </p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-flat-button color="primary" (click)="sendTestMessage()">Send Message to SQS</button>
+  </mat-card-actions>
+</mat-card>
+
+<mat-card *ngIf="processing || (!processing && sqsResponse)">
+  <mat-card-title color="primary">
+    <mat-icon svgIcon="dashboard"></mat-icon>
+    SQS Response
+  </mat-card-title>
+  <mat-card-content>
+    <div *ngIf="processing">
+      <mat-list>
+        <mat-list-item>
+          <mat-progress-spinner matListAvatar color="primary" mode="indeterminate" diameter="40"></mat-progress-spinner>
+          <h3 matLine> Sending message to SQS! </h3>
+        </mat-list-item>
+      </mat-list>
+    </div>
+    <div *ngIf="!processing">
+      <pre class="full-wdith">{{sqsResponse | json}}</pre>
+    </div>
+  </mat-card-content>
+</mat-card>
