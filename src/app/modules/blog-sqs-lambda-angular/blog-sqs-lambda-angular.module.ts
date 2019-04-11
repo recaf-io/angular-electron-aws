@@ -11,7 +11,8 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     FormsModule,
-    material.MatCardModule, material.MatButtonModule,material.MatFormFieldModule, material.MatFormFieldModule, material.MatInputModule, material.MatIconModule
+    material.MatCardModule, material.MatButtonModule,material.MatFormFieldModule, material.MatFormFieldModule, material.MatInputModule, material.MatIconModule,
+    material.MatListModule, material.MatProgressSpinnerModule
   ]
 })
 export class BlogSqsLambdaAngularModule { 

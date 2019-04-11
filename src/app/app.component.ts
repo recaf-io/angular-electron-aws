@@ -91,6 +91,8 @@ export class AppComponent {
         return 'Dashboard';
       case '/credentials':
         return 'Credentials';
+        case '/sqs-message-sender':
+          return 'SQS Test Message';
     }
     return 'Dashboard'
   }
