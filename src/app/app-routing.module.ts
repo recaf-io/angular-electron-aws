@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 //import { AwsModule } from './modules/aws/aws.module';
 import { AwsCredentialsComponent } from './modules/awsui/components/aws.credentials/aws.credentials.component';
 import {SqsMessageSenderComponent} from './modules/blog-sqs-lambda-angular/components/sqs-message-sender/sqs-message-sender.component';
+import {LambdaInvokeComponent} from './modules/blog-lambda-angular/components/lambda-invoke/lambda-invoke.component';
 
 const routes: Routes = [
     {
@@ -19,6 +20,10 @@ const routes: Routes = [
     {
         path: 'sqs-message-sender',
         component: SqsMessageSenderComponent
+    },
+    {
+        path: 'lambda-invoke',
+        component: LambdaInvokeComponent
     }
 ];
 

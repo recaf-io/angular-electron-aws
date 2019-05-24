@@ -35,6 +35,12 @@
                         SQS Test Message
                     </a>
                 </mat-list-item>
+                <mat-list-item routerLink="lambda-invoke" [ngClass]="{highlightCurrentRoute: pageTitle=='Lambda Invoke'}">
+                    <mat-icon svgIcon="dashboard"></mat-icon>
+                    <a matLine routerLink="/lambda-invoke">
+                        Lambda Invoke
+                    </a>
+                </mat-list-item>
                 <mat-list-item routerLink="credentials" [ngClass]="{highlightCurrentRoute: pageTitle=='Credentials'}">
                     <mat-icon svgIcon="dashboard"></mat-icon>
                     <a matLine routerLink="/credentials">

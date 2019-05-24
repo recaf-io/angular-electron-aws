@@ -28,6 +28,7 @@ import * as awsui from './modules/awsui/awsui.module'
 import * as sharedui from './modules/sharedui/sharedui.module';
 import * as shared from './modules/shared/shared.module';
 import * as sqsBlog from './modules/blog-sqs-lambda-angular/blog-sqs-lambda-angular.module';
+import * as lambdaBlog from './modules/blog-lambda-angular/blog-lambda-angular.module';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -64,7 +65,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     //home grown aws modules
     aws.AwsModule,
     awsui.AwsuiModule,
-    sqsBlog.BlogSqsLambdaAngularModule
+    sqsBlog.BlogSqsLambdaAngularModule,
+    lambdaBlog.BlogLambdaAngularModule
   ],
   providers: [ElectronService],
   bootstrap: [AppComponent]
