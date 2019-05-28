@@ -9,7 +9,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { DomSanitizer, Title } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material';
 
-import { AwsCredentialsService }from './modules/aws/service/credentials/aws-credentials.service';
+import { AwsCredentialsService } from './modules/aws/service/credentials/aws-credentials.service';
 
 interface iconData {
   fileName: string,
@@ -53,7 +53,7 @@ export class AppComponent {
     }
   }
 
-  
+
   public isDoneLoading: boolean = false;
 
   public pageTitle: string = 'Dashboard';
@@ -91,14 +91,16 @@ export class AppComponent {
         return 'Dashboard';
       case '/credentials':
         return 'Credentials';
-        case '/sqs-message-sender':
-          return 'SQS Test Message';
+      case '/sqs-message-sender':
+        return 'SQS Test Message';
+      case '/lambda-invoke':
+        return 'Lambda Invoke';
     }
     return 'Dashboard'
   }
 
   async ngOnInit() {
-    
+
     //console.log('is done loading app component');
     this.isDoneLoading = true;
 
@@ -106,9 +108,9 @@ export class AppComponent {
     let region = await this.credentialService.getCurrentRegion();
 
     if (!isDevMode() && electron.remote.app) {
-     
+
     }
-    else{
+    else {
       console.log('app not found. not running autoupdate');
     }
   }
